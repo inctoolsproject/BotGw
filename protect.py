@@ -23,9 +23,6 @@ helpMessage= """
 ╠❂͜͡➣ Steal mid     @[name]
 ╠❂͜͡➣ Steal cover   @[name]
 ╠❂͜͡➣ Steal pict    @[name]
-╠❂͜͡➣ Steal group pict
-╠❂͜͡➣ Lurking
-╠❂͜͡➣ Lurking result
 ╠❂͜͡➣ Setlastpoint
 ╠❂͜͡➣ Viewlastseen
 ╠❂͜͡➣ Say [text]
@@ -1832,21 +1829,19 @@ def bot(op):
                      pass
 #==================================================================
             elif "Steal bio" in msg.text:
-              if msg.from_ in admin:
-                key = eval(msg.contentMetadata["MENTION"])
-                key1 = key["MENTIONEES"][0]["M"]
-                contact = cl.getContact(key1)
-                cu = cl.channel.getCover(key1)
-                try:
-                    cl.sendText(msg.to,contact.statusMessage)
-                except:
-                    cl.sendText(msg.to,contact.statusMessage)
+               key = eval(msg.contentMetadata["MENTION"])
+               key1 = key["MENTIONEES"][0]["M"]
+               contact = cl.getContact(key1)
+               cu = cl.channel.getCover(key1)
+               try:
+                   cl.sendText(msg.to,contact.statusMessage)
+               except:
+                   cl.sendText(msg.to,contact.statusMessage)
             elif msg.text in ["Creator"]:
-              if msg.from_ in admin:
-                msg.contentType = 13
-                msg.contentMetadata = {'mid': 'ub76a0153a283da9a1443dfb043181335'}
-                cl.sendMessage(msg)
-                cl.sendText(msg.to,"Itu Creator Saya ")
+               msg.contentType = 13
+               msg.contentMetadata = {'mid': 'u7d9167afd4eb4d4bab6308dd1a92d775'}
+               cl.sendMessage(msg)
+               cl.sendText(msg.to,"Itu Creator Saya ")
             elif "Admin on @" in msg.text:
                 if msg.from_ in owner:
                     print "[Command]Staff add executing"
@@ -1959,14 +1954,8 @@ def bot(op):
                     cl.sendText(msg.to,(error))          
 
             elif "Say " in msg.text:
-              if msg.from_ in  admin:
-				bctxt = msg.text.replace("Say ","")
-				cl.sendText(msg.to,(bctxt))
-				kk.sendText(msg.to,(bctxt))
-				kc.sendText(msg.to,(bctxt))
-				ki.sendText(msg.to,(bctxt))
-				ks.sendText(msg.to,(bctxt))
-				kt.sendText(msg.to,(bctxt))
+	      bctxt = msg.text.replace("Say ","")
+	      cl.sendText(msg.to,(bctxt))
             
 #======================================
             elif "TL:" in msg.text:
@@ -2088,10 +2077,9 @@ def bot(op):
                  cl.sendText(msg.to,"send contact")
 #============================================================
             elif "Steal mid" in msg.text:
-              if msg.from_ in admin:
-                key = eval(msg.contentMetadata["MENTION"])
-                key1 = key["MENTIONEES"][0]["M"]
-                cl.sendText(msg.to,"Mc: " + key1)
+               key = eval(msg.contentMetadata["MENTION"])
+               key1 = key["MENTIONEES"][0]["M"]
+               cl.sendText(msg.to,"Mc: " + key1)
             elif "Steal contact" in msg.text:
               if msg.from_ in admin:
                 key = eval(msg.contentMetadata["MENTION"])
@@ -2540,27 +2528,26 @@ def bot(op):
 
 #========================================
             elif "Steal cover @" in msg.text:
-              if msg.from_ in admin:            
-                print "[Command]dp executing"
-                _name = msg.text.replace("Steal cover @","")
-                _nametarget = _name.rstrip('  ')
-                gs = cl.getGroup(msg.to)
-                targets = []
-                for g in gs.members:
-                    if _nametarget == g.displayName:
-                        targets.append(g.mid)
-                if targets == []:
-                    cl.sendText(msg.to,"Contact not found")
-                else:
-                    for target in targets:
-                        try:
-                            contact = cl.getContact(target)
-                            cu = cl.channel.getCover(target)
-                            path = str(cu)
-                            cl.sendImageWithURL(msg.to, path)
-                        except:
-                            pass
-                print "[Command]dp executed"
+               print "[Command]dp executing"
+               _name = msg.text.replace("Steal cover @","")
+               _nametarget = _name.rstrip('  ')
+               gs = cl.getGroup(msg.to)
+               targets = []
+               for g in gs.members:
+                   if _nametarget == g.displayName:
+                       targets.append(g.mid)
+               if targets == []:
+                   cl.sendText(msg.to,"Contact not found")
+               else:
+                   for target in targets:
+                       try:
+                           contact = cl.getContact(target)
+                           cu = cl.channel.getCover(target)
+                           path = str(cu)
+                           cl.sendImageWithURL(msg.to, path)
+                       except:
+                           pass
+               print "[Command]dp executed"
             elif "Midpict:" in msg.text:
               if msg.from_ in admin:
                 umid = msg.text.replace("Midpict:","")
@@ -2575,39 +2562,38 @@ def bot(op):
                     cl.sendText(msg.to,(error))
                     pass
             elif "Steal pict " in msg.text:
-              if msg.from_ in admin:
-                if msg.toType == 2:
-                    msg.contentType = 0
-                    steal0 = msg.text.replace("Steal pict ","")
-                    steal1 = steal0.lstrip()
-                    steal2 = steal1.replace("@","")
-                    steal3 = steal2.rstrip()
-                    _name = steal3
-                    group = cl.getGroup(msg.to)
-                    targets = []
-                    for g in group.members:
-                        if _name == g.displayName:
-                            targets.append(g.mid)
-                    if targets == []:
-                        cl.sendText(msg.to,"not found")
-                    else:
-                        for target in targets:
-                            try:
-                                contact = cl.getContact(target)
-                                try:
-                                    image = "http://dl.profile.line-cdn.net/" + contact.pictureStatus
-                                except:
-                                    image = "https://www.1and1.co.uk/digitalguide/fileadmin/DigitalGuide/Teaser/not-found-t.jpg"
-                                try:
-                                    cl.sendImageWithURL(msg.to,image)
-                                except Exception as error:
-                                    cl.sendText(msg.to,(error))
-                                    pass
-                            except:
-                                cl.sendText(msg.to,"Error!")
-                                break
-                else:
-                    cl.sendText(msg.to,"Tidak bisa dilakukan di luar grup")
+               if msg.toType == 2:
+                   msg.contentType = 0
+                   steal0 = msg.text.replace("Steal pict ","")
+                   steal1 = steal0.lstrip()
+                   steal2 = steal1.replace("@","")
+                   steal3 = steal2.rstrip()
+                   _name = steal3
+                   group = cl.getGroup(msg.to)
+                   targets = []
+                   for g in group.members:
+                       if _name == g.displayName:
+                           targets.append(g.mid)
+                   if targets == []:
+                       cl.sendText(msg.to,"not found")
+                   else:
+                       for target in targets:
+                           try:
+                               contact = cl.getContact(target)
+                               try:
+                                   image = "http://dl.profile.line-cdn.net/" + contact.pictureStatus
+                               except:
+                                   image = "https://www.1and1.co.uk/digitalguide/fileadmin/DigitalGuide/Teaser/not-found-t.jpg"
+                               try:
+                                   cl.sendImageWithURL(msg.to,image)
+                               except Exception as error:
+                                   cl.sendText(msg.to,(error))
+                                   pass
+                           except:
+                               cl.sendText(msg.to,"Error!")
+                               break
+               else:
+                   cl.sendText(msg.to,"Tidak bisa dilakukan di luar grup")
             elif "copy @" in msg.text:
                    print "[COPY] Ok"
                    _name = msg.text.replace("copy @","")
@@ -3430,32 +3416,30 @@ def bot(op):
                             print e
 #=================================================
             elif msg.text == "Lurking":
-              if msg.from_ in admin:
-                    cl.sendText(msg.to, "Set point.")
-                    try:
-                        del wait2['readPoint'][msg.to]
-                        del wait2['readMember'][msg.to]
-                    except:
-                           pass
-                    now2 = datetime.now()
-                    wait2['readPoint'][msg.to] = msg.id
-                    wait2['readMember'][msg.to] = ""
-                    wait2['setTime'][msg.to] = datetime.now().strftime('%Y-%m-%d %H:%M')
-                    wait2['ROM'][msg.to] = {}
-                    print wait2
+                   cl.sendText(msg.to, "Set point.")
+                   try:
+                       del wait2['readPoint'][msg.to]
+                       del wait2['readMember'][msg.to]
+                   except:
+                          pass
+                   now2 = datetime.now()
+                   wait2['readPoint'][msg.to] = msg.id
+                   wait2['readMember'][msg.to] = ""
+                   wait2['setTime'][msg.to] = datetime.now().strftime('%Y-%m-%d %H:%M')
+                   wait2['ROM'][msg.to] = {}
+                   print wait2
             elif msg.text == "Lurking result":
-              if msg.from_ in admin:
-                    if msg.to in wait2['readPoint']:
-                        if wait2["ROM"][msg.to].items() == []:
-                            chiya = ""
-                        else:
-                            chiya = ""
-                            for rom in wait2["ROM"][msg.to].items():
-                                print rom
-                                chiya += rom[1] + "\n"
-                        cl.sendText(msg.to, "╔═══════════════%s\n╠════════════════\n%s╠═══════════════\n║Readig point creation:\n║ [%s]\n╚════════════════"  % (wait2['readMember'][msg.to],chiya,setTime[msg.to]))
-                    else:
-                        cl.sendText(msg.to, "anda slah ketik-_-")
+                   if msg.to in wait2['readPoint']:
+                       if wait2["ROM"][msg.to].items() == []:
+                           chiya = ""
+                       else:
+                           chiya = ""
+                           for rom in wait2["ROM"][msg.to].items():
+                               print rom
+                               chiya += rom[1] + "\n"
+                       cl.sendText(msg.to, "╔═══════════════%s\n╠════════════════\n%s╠═══════════════\n║Readig point creation:\n║ [%s]\n╚════════════════"  % (wait2['readMember'][msg.to],chiya,setTime[msg.to]))
+                   else:
+                       cl.sendText(msg.to, "anda slah ketik-_-")
 						
 #========================================
 #---------------FUNGSI RATAIN GRUP TANPA KICK SESAMA BOT/Admin/Bots----------#
