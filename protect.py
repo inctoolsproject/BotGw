@@ -27,22 +27,14 @@ helpMessage= """
 ╠❂͜͡➣ Viewlastseen
 ╠❂͜͡➣ Say [text]
 ╠❂͜͡➣ Me
-╠❂͜͡➣ Speed
-╠❂͜͡➣ My mid
-╠❂͜͡➣ Gcreator
 ╠❂͜͡➣ Creator
-╠❂͜͡➣ Help
-╠❂͜͡➣ Lyric [Penyanyi][Judul]
+╠❂͜͡➣ lyric [Penyanyi][Judul]
 ╠❂͜͡➣ Music [Penyanyi][Judul]
-╠❂͜͡➣ Wiki [text]
-╠❂͜͡➣ Vidio [text]
-╠❂͜͡➣ Youtube [text]
+╠❂͜͡➣ wiki [text]
 ╠❂͜͡➣ Instagram [text]
 ╠❂͜͡➣ apakah
 ╠❂͜͡➣ Mention all
 ╠❂͜͡➣ /say
-╠❂͜͡➣ /say-en
-╠❂͜͡➣ /say-jp
 ╠❂͜͡➣ Dosa @
 ╠❂͜͡➣ Siapa
 ╔═══════════════════╗
@@ -1459,9 +1451,8 @@ def bot(op):
                 
                 
             elif msg.text in ["Me"]:
-	      if msg.from_ in admin:
-                msg.contentType = 13
-                msg.contentMetadata = {'mid': msg.from_}
+              msg.contentType = 13
+              msg.contentMetadata = {'mid': msg.from_}
                 cl.sendMessage(msg)
             elif msg.text.lower() == 'gift1':
               if msg.from_ in admin:
@@ -1620,40 +1611,38 @@ def bot(op):
                     kt.sendText(msg.to,"change name: "+string+"\nsucces")    
 #==================================================
             elif 'lyric ' in msg.text.lower():
-              if msg.from_ in admin:
-                try:
-                    songname = msg.text.lower().replace('lyric ','')
-                    params = {'songname': songname}
-                    r = requests.get('http://ide.fdlrcn.com/workspace/yumi-apis/joox?' + urllib.urlencode(params))
-                    data = r.text
-                    data = json.loads(data)
-                    for song in data:
-                        hasil = 'Lyric Lagu ('
-                        hasil += song[0]
-                        hasil += ')\n\n'
-                        hasil += song[5]
-                        cl.sendText(msg.to, hasil)
-                except Exception as wak:
-                        cl.sendText(msg.to, str(wak))
+               try:
+                   songname = msg.text.lower().replace('lyric ','')
+                   params = {'songname': songname}
+                   r = requests.get('http://ide.fdlrcn.com/workspace/yumi-apis/joox?' + urllib.urlencode(params))
+                   data = r.text
+                   data = json.loads(data)
+                   for song in data:
+                       hasil = 'Lyric Lagu ('
+                       hasil += song[0]
+                       hasil += ')\n\n'
+                       hasil += song[5]
+                       cl.sendText(msg.to, hasil)
+               except Exception as wak:
+                       cl.sendText(msg.to, str(wak))
             elif 'wiki ' in msg.text.lower():
-              if msg.from_ in admin:
-                  try:
-                      wiki = msg.text.lower().replace("wiki ","")
-                      wikipedia.set_lang("id")
-                      pesan="Title ("
-                      pesan+=wikipedia.page(wiki).title
-                      pesan+=")\n\n"
-                      pesan+=wikipedia.summary(wiki, sentences=1)
-                      pesan+="\n"
-                      pesan+=wikipedia.page(wiki).url
-                      cl.sendText(msg.to, pesan)
-                  except:
-                          try:
-                              pesan="Over Text Limit! Please Click link\n"
-                              pesan+=wikipedia.page(wiki).url
-                              cl.sendText(msg.to, pesan)
-                          except Exception as e:
-                              cl.sendText(msg.to, str(e))
+                 try:
+                     wiki = msg.text.lower().replace("wiki ","")
+                     wikipedia.set_lang("id")
+                     pesan="Title ("
+                     pesan+=wikipedia.page(wiki).title
+                     pesan+=")\n\n"
+                     pesan+=wikipedia.summary(wiki, sentences=1)
+                     pesan+="\n"
+                     pesan+=wikipedia.page(wiki).url
+                     cl.sendText(msg.to, pesan)
+                 except:
+                         try:
+                             pesan="Over Text Limit! Please Click link\n"
+                             pesan+=wikipedia.page(wiki).url
+                             cl.sendText(msg.to, pesan)
+                         except Exception as e:
+                             cl.sendText(msg.to, str(e))
             elif msg.text.lower() == 'bot restart':
               if msg.from_ in admin:
                     print "[Command]Like executed"
@@ -3573,11 +3562,10 @@ def bot(op):
 #-----------------------------------------------
 #-----------------------------------------------
             elif 'apakah' in msg.text.lower():
-              if msg.from_ in admin:
-                tanya = msg.text.lower().replace("apakah","")
-                jawab = ("Ya","Tidak","Mungkin","Bisa jadi")
-                jawaban = random.choice(jawab)
-                cl.sendText(msg.to,jawaban)
+               tanya = msg.text.lower().replace("apakah","")
+               jawab = ("Ya","Tidak","Mungkin","Bisa jadi")
+               jawaban = random.choice(jawab)
+               cl.sendText(msg.to,jawaban)
             
 #================================================
 #===============================================
@@ -3761,7 +3749,7 @@ def bot(op):
 #-----------------------------------------------
             elif "Siapa " in msg.text:
     		tanya = msg.text.replace("Siapa ","")
-    		jawab = ("Dia yg kebanyakan micin"," Dia gila")
+    		jawab = ("Dia yang kebanyakan micin","Pacar kamu","Yang itu loh","Teman kamu","Sahabat kamu")
     		jawaban = random.choice(jawab)
 		tts = gTTS(text=jawaban, lang='id')
 		tts.save('tts.mp3')
@@ -3962,65 +3950,64 @@ def bot(op):
                         #random.choice(KAC).cancelGroupInvitation(msg.to,[_mid])
                     #cl.sendText(msg.to,"Clear boss!!!")
             elif msg.text.lower() in ["Ats","Tag","mention all"]:
-              if msg.from_ in admin:
-                group = cl.getGroup(msg.to)
-                nama = [contact.mid for contact in group.members]
-                nm1, nm2, nm3, nm4, nm5, jml = [], [], [], [], [], len(nama)
-                if jml <= 100:
-                    mention(msg.to, nama)
-                    if jml > 100 and jml < 200:
-                        for i in range(0, 100):
-                            nm1 += [nama[i]]
-                    mention(msg.to, nm1)
-                    for j in range(101, len(nama)):
+               group = cl.getGroup(msg.to)
+               nama = [contact.mid for contact in group.members]
+               nm1, nm2, nm3, nm4, nm5, jml = [], [], [], [], [], len(nama)
+               if jml <= 100:
+                   mention(msg.to, nama)
+                   if jml > 100 and jml < 200:
+                       for i in range(0, 100):
+                           nm1 += [nama[i]]
+                   mention(msg.to, nm1)
+                   for j in range(101, len(nama)):
+                       nm2 += [nama[j]]
+                   mention(msg.to, nm2)
+               if jml > 200 and jml < 300:
+                   for i in range(0, 100):
+                       nm1 += [nama[i]]
+                   mention(msg.to, nm1)
+                   for j in range(101, 200):
+                       nm2 += [nama[j]]
+                   mention(msg.to, nm2)
+                   for k in range(201, len(nama)):
+                       nm3 += [nama[k]]
+                   mention(msg.to, nm3)
+               if jml > 300 and jml < 400:
+                   for i in range(0, 100):
+                       nm1 += [nama[i]]
+                   mention(msg.to, nm1)
+                   for j in range(101, 200):
+                       nm2 += [nama[j]]
+                   mention(msg.to, nm2)
+                   for k in range(201, 300):
+                       nm3 += [nama[k]]
+                   mention(msg.to, nm3)
+                   for l in range(301, len(nama)):
+                       nm4 += [nama[l]]
+                   mention(msg.to, nm4)
+               if jml > 400 and jml < 500:
+                   for i in range(0, 100):
+                       nm1 += [nama[i]]
+                   mention(msg.to, nm1)
+                   for j in range(101, 200):
                         nm2 += [nama[j]]
-                    mention(msg.to, nm2)
-                if jml > 200 and jml < 300:
-                    for i in range(0, 100):
-                        nm1 += [nama[i]]
-                    mention(msg.to, nm1)
-                    for j in range(101, 200):
-                        nm2 += [nama[j]]
-                    mention(msg.to, nm2)
-                    for k in range(201, len(nama)):
-                        nm3 += [nama[k]]
-                    mention(msg.to, nm3)
-                if jml > 300 and jml < 400:
-                    for i in range(0, 100):
-                        nm1 += [nama[i]]
-                    mention(msg.to, nm1)
-                    for j in range(101, 200):
-                        nm2 += [nama[j]]
-                    mention(msg.to, nm2)
-                    for k in range(201, 300):
-                        nm3 += [nama[k]]
-                    mention(msg.to, nm3)
-                    for l in range(301, len(nama)):
-                        nm4 += [nama[l]]
-                    mention(msg.to, nm4)
-                if jml > 400 and jml < 500:
-                    for i in range(0, 100):
-                        nm1 += [nama[i]]
-                    mention(msg.to, nm1)
-                    for j in range(101, 200):
-                        nm2 += [nama[j]]
-                    mention(msg.to, nm2)
-                    for k in range(201, 300):
-                        nm3 += [nama[k]]
-                    mention(msg.to, nm3)
-                    for l in range(301, 400):
-                        nm4 += [nama[l]]
-                    mention(msg.to, nm4)
-                    for h in range(401, len(nama)):
-                        nm5 += [nama[h]]
-                    mention(msg.to, nm5)
-                if jml > 500:
-                    cl.sendText(msg.to,'Member melebihi batas.')
-                    cnt = Message()
-                    cnt.text = "Done : " + str(jml) +  " Members"
-                    cnt.to = msg.to
-                    cl.sendMessage(cnt)           
-                      
+                   mention(msg.to, nm2)
+                   for k in range(201, 300):
+                       nm3 += [nama[k]]
+                   mention(msg.to, nm3)
+                   for l in range(301, 400):
+                       nm4 += [nama[l]]
+                   mention(msg.to, nm4)
+                   for h in range(401, len(nama)):
+                       nm5 += [nama[h]]
+                   mention(msg.to, nm5)
+               if jml > 500:
+                   cl.sendText(msg.to,'Member melebihi batas.')
+                   cnt = Message()
+                   cnt.text = "Done : " + str(jml) +  " Members"
+                   cnt.to = msg.to
+                   cl.sendMessage(cnt)           
+                     
 #===========================================
         if op.param3 == "1":
             if op.param1 in protectname:
