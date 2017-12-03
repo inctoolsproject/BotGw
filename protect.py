@@ -1453,7 +1453,7 @@ def bot(op):
             elif msg.text in ["Me"]:
               msg.contentType = 13
               msg.contentMetadata = {'mid': msg.from_}
-                cl.sendMessage(msg)
+              cl.sendMessage(msg)
             elif msg.text.lower() == 'gift1':
               if msg.from_ in admin:
                 msg.contentType = 9
@@ -1692,23 +1692,22 @@ def bot(op):
                 except Exception as njer:
                 	cl.sendText(msg.to, str(njer))
             elif 'music ' in msg.text.lower():
-              if msg.from_ in admin:
-                try:
-                    songname = msg.text.lower().replace('music ','')
-                    params = {'songname': songname}
-                    r = requests.get('http://ide.fdlrcn.com/workspace/yumi-apis/joox?' + urllib.urlencode(params))
-                    data = r.text
-                    data = json.loads(data)
-                    for song in data:
-                        hasil = 'This is Your Music\n'
-                        hasil += 'Judul : ' + song[0]
-                        hasil += '\nDurasi : ' + song[1]
-                        hasil += '\nLink Download : ' + song[4]
-                        cl.sendText(msg.to, hasil)
-                        cl.sendText(msg.to, "Please Wait for audio...")
-                        cl.sendAudioWithURL(msg.to, song[3])
-		except Exception as njer:
-		        cl.sendText(msg.to, str(njer))
+               try:
+                   songname = msg.text.lower().replace('music ','')
+                   params = {'songname': songname}
+                   r = requests.get('http://ide.fdlrcn.com/workspace/yumi-apis/joox?' + urllib.urlencode(params))
+                   data = r.text
+                   data = json.loads(data)
+                   for song in data:
+                       hasil = 'This is Your Music\n'
+                       hasil += 'Judul : ' + song[0]
+                       hasil += '\nDurasi : ' + song[1]
+                       hasil += '\nLink Download : ' + song[4]
+                       cl.sendText(msg.to, hasil)
+                       cl.sendText(msg.to, "Please Wait for audio...")
+                       cl.sendAudioWithURL(msg.to, song[3])
+	       except Exception as njer:
+		       cl.sendText(msg.to, str(njer))
             elif 'clean invites' in msg.text.lower():
                if msg.from_ in admin:
                 if msg.toType == 2:
